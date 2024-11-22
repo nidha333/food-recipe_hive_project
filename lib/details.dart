@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:hive_project_app/database/function.dart';
 
 class Details extends StatelessWidget {
   String? name;
