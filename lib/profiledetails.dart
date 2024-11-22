@@ -347,7 +347,9 @@ class _ProfiledetailsState extends State<Profiledetails> {
                           trailing: IconButton(
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const Favorites()));
+                                  builder: (context) => const Favorites(
+                                        favoriteRecipes: [],
+                                      )));
                             },
                             icon: const Icon(Icons.favorite_border_outlined),
                           ),

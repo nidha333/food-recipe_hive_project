@@ -6,6 +6,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:hive_project_app/database/function.dart';
 import 'package:hive_project_app/details.dart';
 import 'package:hive_project_app/gallery.dart';
+import 'package:hive_project_app/favorites.dart';
+import 'package:hive_project_app/models/models.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -16,6 +18,8 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   String? selectedCategory = 'All';
+  List<int> favoriteIndices = [];
+  List<FoodRecipe> favoriteRecipes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +45,16 @@ class _HomepageState extends State<Homepage> {
                 ),
                 trailing: IconButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => GalleryPage()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Favorites(favoriteRecipes: favoriteRecipes),
+                        ),
+                      );
                     },
                     icon: const Icon(
-                      Icons.image,
+                      Icons.favorite,
                       size: 30,
                       color: Color.fromARGB(255, 98, 184, 255),
                     )),
@@ -165,6 +174,7 @@ class _HomepageState extends State<Homepage> {
                       itemCount: filteredRecipes.length,
                       itemBuilder: (context, index) {
                         final datas = value[index];
+                        bool isFavorited = favoriteIndices.contains(index);
                         return Padding(
                           padding: const EdgeInsets.all(10),
                           child: GestureDetector(
@@ -216,23 +226,39 @@ class _HomepageState extends State<Homepage> {
                                       ],
                                     ),
                                     trailing: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            deleteRecipe(index);
-                                          },
-                                          icon: const Icon(Icons.delete),
-                                        ),
-                                        IconButton(
-                                            onPressed: () {},
-                                            icon: IconButton(
-                                                onPressed: () {},
-                                                icon: Icon(Icons
-                                                    .favorite_border_outlined)))
-                                      ],
-                                    ),
-                                  ),
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              deleteRecipe(index);
+                                            },
+                                            icon: const Icon(Icons.delete),
+                                          ),
+                                          IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  if (isFavorited) {
+                                                    favoriteIndices
+                                                        .remove(index);
+                                                    favoriteRecipes
+                                                        .remove(datas);
+                                                  } else {
+                                                    favoriteIndices.add(index);
+                                                    favoriteRecipes.add(datas);
+                                                  }
+                                                });
+                                              },
+                                              icon: Icon(
+                                                isFavorited
+                                                    ? Icons.favorite
+                                                    : Icons
+                                                        .favorite_border_outlined,
+                                                color: isFavorited
+                                                    ? Colors.black
+                                                    : null,
+                                              )),
+                                        ]),
+                                  )
                                 ],
                               ),
                             ),
@@ -242,6 +268,18 @@ class _HomepageState extends State<Homepage> {
                     );
                   },
                 ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          Favorites(favoriteRecipes: favoriteRecipes),
+                    ),
+                  );
+                },
+                child: const Text('Go to My Favorites'),
               ),
             ],
           ),

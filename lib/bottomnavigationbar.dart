@@ -2,8 +2,9 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_project_app/addrecipy.dart';
 import 'package:hive_project_app/favorites.dart';
-import 'package:hive_project_app/gallery.dart';
+// import 'package:hive_project_app/gallery.dart';
 import 'package:hive_project_app/homepage.dart';
+import 'package:hive_project_app/models/models.dart';
 import 'package:hive_project_app/profiledetails.dart';
 
 import 'package:hive_project_app/search.dart';
@@ -20,7 +21,9 @@ final pages = [
   Homepage(),
   SearchPage(),
   Addrecipy(),
-  Favorites(),
+  // Favorites(
+  //   favoriteRecipes: [],
+  // ),
   Profiledetails()
 ];
 
@@ -51,11 +54,11 @@ class _BottomnavigationbarPageState extends State<BottomnavigationbarPage> {
             width: 70,
             height: 70,
           ),
-          Image.asset(
-            'assets/Screenshot_2024-11-16_025421-removebg-preview.png',
-            width: 70,
-            height: 70,
-          ),
+          // Image.asset(
+          //   'assets/Screenshot_2024-11-16_025421-removebg-preview.png',
+          //   width: 70,
+          //   height: 70,
+          // ),
           Image.asset(
             'assets/Screenshot_2024-11-12_053113-removebg-preview.png',
             width: 70,
