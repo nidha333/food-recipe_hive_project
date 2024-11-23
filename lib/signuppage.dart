@@ -155,6 +155,7 @@ class _SignuppageState extends State<Signuppage> {
 
       _pref.setString('username', name);
       _pref.setString('password', password);
+      _pref.setBool('log', true);
       clear();
       adduser(user);
 

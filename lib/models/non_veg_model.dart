@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
-part 'models.g.dart';
+part 'non_veg_model.g.dart';
 
-@HiveType(typeId: 0)
-class VegFoodRecipe {
+@HiveType(typeId: 2)
+class NonVegModel {
   @HiveField(0)
   String? itemName;
   @HiveField(1)
@@ -15,7 +15,7 @@ class VegFoodRecipe {
   String? step;
   @HiveField(5)
   String? image;
-  VegFoodRecipe(
+  NonVegModel(
       {required this.itemName,
       required this.category,
       required this.addIngreadents,

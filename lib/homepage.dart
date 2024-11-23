@@ -5,9 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:hive_project_app/database/function.dart';
 import 'package:hive_project_app/details.dart';
-import 'package:hive_project_app/gallery.dart';
 import 'package:hive_project_app/favorites.dart';
-import 'package:hive_project_app/models/models.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -19,7 +17,6 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   String? selectedCategory = 'All';
   List<int> favoriteIndices = [];
-  List<FoodRecipe> favoriteRecipes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -44,20 +41,20 @@ class _HomepageState extends State<Homepage> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 trailing: IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              Favorites(favoriteRecipes: favoriteRecipes),
-                        ),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.favorite,
-                      size: 30,
-                      color: Color.fromARGB(255, 98, 184, 255),
-                    )),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            Favorites(favoriteIndices: favoriteIndices),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.favorite,
+                    size: 30,
+                    color: Color.fromARGB(255, 98, 184, 255),
+                  ),
+                ),
               ),
               const Gap(20),
               const ListTile(
@@ -159,9 +156,10 @@ class _HomepageState extends State<Homepage> {
                   builder: (context, value, child) {
                     if (value.isEmpty) {
                       return Center(
-                          child: Image.asset(
-                        'assets/veg1.jpg',
-                      ));
+                        child: Image.asset(
+                          'assets/veg1.jpg',
+                        ),
+                      );
                     }
 
                     List filteredRecipes = selectedCategory == 'All'
@@ -173,7 +171,7 @@ class _HomepageState extends State<Homepage> {
                     return ListView.builder(
                       itemCount: filteredRecipes.length,
                       itemBuilder: (context, index) {
-                        final datas = value[index];
+                        final datas = filteredRecipes[index];
                         bool isFavorited = favoriteIndices.contains(index);
                         return Padding(
                           padding: const EdgeInsets.all(10),
@@ -196,32 +194,38 @@ class _HomepageState extends State<Homepage> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Gap(40),
-                                  Container(
-                                    child: datas.image != null
-                                        ? Image.file(File(datas.image!))
-                                        : Image.asset(
-                                            'assets/Screenshot_2024-11-12_050329-removebg-preview.png'),
-                                    width: 300,
-                                    height: 300,
-                                    color: Colors.white,
+                                  Card(
+                                    elevation: 10,
+                                    child: Container(
+                                      child: datas.image != null
+                                          ? Image.file(File(datas.image!))
+                                          : Image.asset(
+                                              'assets/Screenshot_2024-11-12_050329-removebg-preview.png',
+                                            ),
+                                      width: 300,
+                                      height: 300,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                   Gap(20),
                                   ListTile(
                                     title: Text(
-                                      datas.itemName!,
+                                      "Name : ${datas.itemName!}",
                                       style: const TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          datas.category!,
-                                          style: TextStyle(fontSize: 20),
+                                          "Category : ${datas.category!}",
+                                          style: const TextStyle(fontSize: 20),
                                         ),
                                         Text(
-                                          datas.amound!,
-                                          style: TextStyle(fontSize: 20),
+                                          "Amount : ${datas.amound!}",
+                                          style: const TextStyle(fontSize: 20),
                                         ),
                                       ],
                                     ),
@@ -235,28 +239,25 @@ class _HomepageState extends State<Homepage> {
                                             icon: const Icon(Icons.delete),
                                           ),
                                           IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (isFavorited) {
-                                                    favoriteIndices
-                                                        .remove(index);
-                                                    favoriteRecipes
-                                                        .remove(datas);
-                                                  } else {
-                                                    favoriteIndices.add(index);
-                                                    favoriteRecipes.add(datas);
-                                                  }
-                                                });
-                                              },
-                                              icon: Icon(
-                                                isFavorited
-                                                    ? Icons.favorite
-                                                    : Icons
-                                                        .favorite_border_outlined,
-                                                color: isFavorited
-                                                    ? Colors.black
-                                                    : null,
-                                              )),
+                                            onPressed: () {
+                                              setState(() {
+                                                if (isFavorited) {
+                                                  favoriteIndices.remove(index);
+                                                } else {
+                                                  favoriteIndices.add(index);
+                                                }
+                                              });
+                                            },
+                                            icon: Icon(
+                                              isFavorited
+                                                  ? Icons.favorite
+                                                  : Icons
+                                                      .favorite_border_outlined,
+                                              color: isFavorited
+                                                  ? Colors.black
+                                                  : null,
+                                            ),
+                                          ),
                                         ]),
                                   )
                                 ],
@@ -268,18 +269,6 @@ class _HomepageState extends State<Homepage> {
                     );
                   },
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          Favorites(favoriteRecipes: favoriteRecipes),
-                    ),
-                  );
-                },
-                child: const Text('Go to My Favorites'),
               ),
             ],
           ),

@@ -5,12 +5,15 @@ import 'package:hive_project_app/favorites.dart';
 // import 'package:hive_project_app/gallery.dart';
 import 'package:hive_project_app/homepage.dart';
 import 'package:hive_project_app/models/models.dart';
+import 'package:hive_project_app/models/non_veg_model.dart';
 import 'package:hive_project_app/profiledetails.dart';
 
 import 'package:hive_project_app/search.dart';
 
 class BottomnavigationbarPage extends StatefulWidget {
-  const BottomnavigationbarPage({super.key});
+  const BottomnavigationbarPage({
+    super.key,
+  });
 
   @override
   State<BottomnavigationbarPage> createState() =>

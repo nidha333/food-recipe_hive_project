@@ -76,7 +76,8 @@ class _AddrecipyState extends State<Addrecipy> {
                     radius: 100,
                     child: _image != null
                         ? Image.file(_image!)
-                        : Image.asset('assets/imggggg.jpg'),
+                        : Image.asset(
+                            'assets/Screenshot 2024-11-13 012901.png'),
                   ),
                 ),
               ),
@@ -240,7 +241,7 @@ class _AddrecipyState extends State<Addrecipy> {
     if (name.isEmpty || category == null || amount.isEmpty || step.isEmpty) {
       return;
     } else {
-      final value = FoodRecipe(
+      final value = VegFoodRecipe(
           image: _image?.path ?? '',
           itemName: name,
           category: category,

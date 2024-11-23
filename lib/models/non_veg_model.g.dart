@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'models.dart';
+part of 'non_veg_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class VegFoodRecipeAdapter extends TypeAdapter<VegFoodRecipe> {
+class NonVegModelAdapter extends TypeAdapter<NonVegModel> {
   @override
-  final int typeId = 0;
+  final int typeId = 2;
 
   @override
-  VegFoodRecipe read(BinaryReader reader) {
+  NonVegModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return VegFoodRecipe(
+    return NonVegModel(
       itemName: fields[0] as String?,
       category: fields[1] as String?,
       addIngreadents: fields[2] as String?,
@@ -27,7 +27,7 @@ class VegFoodRecipeAdapter extends TypeAdapter<VegFoodRecipe> {
   }
 
   @override
-  void write(BinaryWriter writer, VegFoodRecipe obj) {
+  void write(BinaryWriter writer, NonVegModel obj) {
     writer
       ..writeByte(6)
       ..writeByte(0)
@@ -50,7 +50,7 @@ class VegFoodRecipeAdapter extends TypeAdapter<VegFoodRecipe> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is VegFoodRecipeAdapter &&
+      other is NonVegModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

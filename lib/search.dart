@@ -75,18 +75,32 @@ class _SearchPageState extends State<SearchPage> {
                       child: Card(
                         color: const Color.fromARGB(255, 186, 224, 255),
                         elevation: 10,
-                        child: ListTile(
-                          title: Text(datas.itemName!),
-                          subtitle: Text(datas.category!),
-                          trailing: Text(
-                            datas.amound!,
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                          leading: CircleAvatar(
-                            radius: 40,
-                            child: datas.image != null
-                                ? Image.file(File(datas.image!))
-                                : Image.asset('assets/veg3.jpeg'),
+                        child: Container(
+                          width: double.infinity,
+                          height: 100,
+                          child: ListTile(
+                            title: Text(
+                              datas.itemName!,
+                              style: const TextStyle(
+                                  fontSize: 20,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            subtitle: Text(
+                              datas.category!,
+                              style: const TextStyle(
+                                  fontSize: 20, fontStyle: FontStyle.italic),
+                            ),
+                            trailing: Text(
+                              datas.amound!,
+                              style: const TextStyle(fontSize: 15),
+                            ),
+                            leading: CircleAvatar(
+                              radius: 40,
+                              backgroundImage: datas.image != null
+                                  ? FileImage(File(datas.image!))
+                                  : AssetImage('assets/veg3.jpeg'),
+                            ),
                           ),
                         ),
                       ),
